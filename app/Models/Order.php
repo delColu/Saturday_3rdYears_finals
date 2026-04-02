@@ -5,6 +5,8 @@ namespace App\Models;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Order_items;
 
 
 class Order extends Model
@@ -25,6 +27,11 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function order_items()
+    {
+        return $this->hasMany(Order_items::class);
     }
 
 

@@ -13,8 +13,8 @@ class OrdersController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return inertia('Orders/index', [
-'orders' => Order::with('user')->paginate(10)
+        return Inertia::render('Orders/index', [
+            'orders' => Order::with(['user', 'order_items.product'])->paginate(10)
         ]);
     }
 }

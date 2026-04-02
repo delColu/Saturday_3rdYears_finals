@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\Payment;
 
 class ProfileController extends Controller
 {
@@ -59,5 +63,18 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Display dashboard with recent stats.
+     */
+    public function dashboard(Request $request): Response
+    {
+        $recentOrders = Order::with(['user', 'order_items.product'])->latest()->limit(5)->get();
+        $recentUsers = User::latest()->limit(5)->get();
+        $recentProducts = Product::with('category')->latest()->limit(5)->get();
+        $recentPayments = Payment::with('account')->latest()->limit(5)->get();
+
+        return Inertia::render('Dashboard', compact('recentOrders', 'recentUsers', 'recentProducts', 'recentPayments'));
     }
 }

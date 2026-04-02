@@ -19,6 +19,7 @@ class PaymentFactory extends Factory
     {
         return [
             'account_id' => \App\Models\Account::inRandomOrder()->first()?->id ?? \App\Models\Account::factory(),
+            'order_id' => \App\Models\Order::inRandomOrder()->first()?->id ?? \App\Models\Order::factory(),
             'amount' => fake()->randomFloat(2, 10, 5000),
             'payment_method' => fake()->randomElement(['credit_card', 'paypal', 'bank_transfer']),
             'status' => fake()->randomElement(['pending', 'completed', 'failed']),

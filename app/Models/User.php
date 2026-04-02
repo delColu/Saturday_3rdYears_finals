@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Account;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,14 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    /**
+     * Accessor for full name
+     */
+    public function getNameAttribute()
+    {
+        return trim($this->first_name . ' ' . $this->last_name);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,5 +55,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the account associated with the user.
+     */
+    public function account()
+    {
+        return $this->hasOne(Account::class);
     }
 }
