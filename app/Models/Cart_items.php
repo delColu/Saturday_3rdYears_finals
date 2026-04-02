@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
 
+
 class Cart_items extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'cart_id',
         'product_id',

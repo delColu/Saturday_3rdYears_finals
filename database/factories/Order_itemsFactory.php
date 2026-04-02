@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Cart_items;
+use App\Models\Order_items;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Cart_items>
+ * @extends Factory<Order_items>
  */
-class CartItemsFactory extends Factory
+class Order_itemsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,10 @@ class CartItemsFactory extends Factory
     public function definition(): array
     {
         return [
-            'cart_id' => \App\Models\Cart::inRandomOrder()->first()?->id ?? \App\Models\Cart::factory(),
+            'order_id' => \App\Models\Order::inRandomOrder()->first()?->id ?? \App\Models\Order::factory(),
             'product_id' => \App\Models\Product::inRandomOrder()->first()?->id ?? \App\Models\Product::factory(),
-            'quantity' => fake()->numberBetween(1, 10),
+            'quantity' => fake()->numberBetween(1, 5),
+            'price' => fake()->randomFloat(2, 10, 1000),
         ];
     }
 }

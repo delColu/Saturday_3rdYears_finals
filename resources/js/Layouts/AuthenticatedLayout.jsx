@@ -23,18 +23,25 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
+<div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href="/dashboard" active={route().current('dashboard')}>
                                     Dashboard
+                                </NavLink>
+                                <NavLink href="/users">
+                                    Users
+                                </NavLink>
+                                <NavLink href="/products">
+                                    Products
+                                </NavLink>
+                                <NavLink href="/orders">
+                                    Orders
+                                </NavLink>
+                                <NavLink href="/payments">
+                                    Payments
                                 </NavLink>
                             </div>
 
-                            <div>
-                                <h1>Test</h1>
-                            </div>
+
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
@@ -132,12 +139,13 @@ export default function AuthenticatedLayout({ header, children }) {
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
-                        >
+                        <ResponsiveNavLink href="/dashboard" active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href="/users">Users</ResponsiveNavLink>
+                        <ResponsiveNavLink href="/products">Products</ResponsiveNavLink>
+                        <ResponsiveNavLink href="/orders">Orders</ResponsiveNavLink>
+                        <ResponsiveNavLink href="/payments">Payments</ResponsiveNavLink>
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
