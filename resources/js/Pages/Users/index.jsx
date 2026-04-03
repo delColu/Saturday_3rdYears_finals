@@ -1,11 +1,36 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import DangerButton from '@/Components/DangerButton';
+import { useState, useEffect, useCallback } from 'react';
+import TextInput from '@/Components/TextInput';
+import InputLabel from '@/Components/InputLabel';
 
-import { useEffect } from 'react';
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
-export default function UsersIndex() {
-    const { auth, users } = usePage().props;
+export default function UsersIndex({ search: initialSearch }) {
+    const { auth, users, search: propSearch } = usePage().props;
+    const [search, setSearch] = useState(initialSearch || propSearch || '');
+
+    const debouncedSearch = useCallback(debounce((value) => {
+        router.get(route('users.index'), { search: value || null, page: 1 }, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    }, 300), []);
+
+    useEffect(() => {
+        debouncedSearch(search);
+    }, [search, debouncedSearch]);
 const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.account.account_type);
 
     const deleteUser = (userId) => {
@@ -28,16 +53,42 @@ const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
-                            {isAdminPlus && (
-                                <div className="mb-6 flex justify-end">
-                                    <Link
-                                        href={route('users.create')}
-                                        className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                                    >
-                                        Create User
-                                    </Link>
+                            <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                {isAdminPlus && (
+                                    <div className="flex justify-end">
+                                        <Link
+                                            href={route('users.create')}
+                                            className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                        >
+                                            Create User
+                                        </Link>
+                                    </div>
+                                )}
+                                <div className="w-full lg:w-64">
+                                    <InputLabel value="Search users..." className="sr-only" />
+                                    <div className="relative">
+                                        <TextInput
+                                            type="text"
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
+                                            placeholder="Search users by name or email..."
+                                            className="w-full pr-10"
+                                        />
+                                        {search && (
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSearch('');
+                                                    router.get(route('users.index'), { search: null, page: 1 });
+                                                }}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                            >
+                                                ×
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                            )}
+                            </div>
                             {users?.data?.length > 0 ? (
                                 <>
                                     <div className="overflow-x-auto mb-6">

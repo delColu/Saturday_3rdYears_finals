@@ -9,10 +9,18 @@ use App\Models\Category;
 
 class ProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+
         return Inertia::render('Products/index', [
-            'products' => Product::with('category')->paginate(10)
+            'products' => Product::with('category')
+                ->when($search, function ($query, $search) {
+                    return $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('description', 'LIKE', "%{$search}%");
+                })
+                ->paginate(10),
+            'search' => $search,
         ]);
     }
 
@@ -81,12 +89,19 @@ class ProductsController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function shopIndex()
+    public function shopIndex(Request $request)
     {
+        $search = $request->search;
+
         return Inertia::render('Products/index_customer', [
             'products' => Product::with('category')
                 ->where('status', 'available')
-                ->paginate(12)
+                ->when($search, function ($query, $search) {
+                    return $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('description', 'LIKE', "%{$search}%");
+                })
+                ->paginate(12),
+            'search' => $search,
         ]);
     }
 

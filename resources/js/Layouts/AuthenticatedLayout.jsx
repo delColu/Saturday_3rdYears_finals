@@ -50,8 +50,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Payments
                                 </NavLink>
                             </div>
-
-
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">

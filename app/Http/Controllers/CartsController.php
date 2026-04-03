@@ -42,7 +42,7 @@ class CartsController extends Controller
 
     public function store(Request $request)
     {
-$request->validate([
+        $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'sometimes|integer|min:1|max:999'
         ]);
@@ -78,7 +78,6 @@ $request->validate([
         }
 
         return redirect()->route('carts.index')->with('message', 'Product added to cart!');
-
     }
 
     public function update(Request $request, Cart_items $cart_items)
@@ -96,8 +95,10 @@ $request->validate([
         return back()->with('message', 'Cart updated!');
     }
 
-    public function destroy(Cart_items $cart_items)
+    public function destroy(Request $request, $id)
     {
+        $cart_items = Cart_items::findOrFail($id);
+
         if ($cart_items->cart->user_id !== Auth::id()) {
             abort(403);
         }

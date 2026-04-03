@@ -1,9 +1,36 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
+import { useState, useEffect, useCallback } from 'react';
+import TextInput from '@/Components/TextInput';
+import InputLabel from '@/Components/InputLabel';
 
-export default function ProductsIndexCustomer() {
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
+export default function ProductsIndexCustomer({ search: initialSearch }) {
     const { products, auth } = usePage().props;
+    const [search, setSearch] = useState(initialSearch || '');
+
+    const debouncedSearch = useCallback(debounce((value) => {
+        router.get(route('shop.index'), { search: value || null, page: 1 }, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    }, 300), []);
+
+    useEffect(() => {
+        debouncedSearch(search);
+    }, [search, debouncedSearch]);
 
     // Optional: Redirect admin to /products
     if (auth.user?.account?.account_type === 'admin') {
@@ -26,13 +53,37 @@ export default function ProductsIndexCustomer() {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             {products?.data?.length > 0 ? (
-                                <>
-                                    <div className="mb-8">
-                                        <h3 className="text-2xl font-bold mb-4">Browse Our Products</h3>
-                                        <p className="text-gray-600 dark:text-gray-400">
-                                            Discover amazing products available now.
-                                        </p>
+                            <>
+                                <div className="mb-8">
+                                    <h3 className="text-2xl font-bold mb-4">Browse Our Products</h3>
+                                    <div className="w-full max-w-md">
+                                        <InputLabel value="Search products..." className="sr-only" />
+                                        <div className="relative">
+                                            <TextInput
+                                                type="text"
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                                placeholder="Search products by name or description..."
+                                                className="w-full pr-10"
+                                            />
+                                            {search && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSearch('');
+                                                        router.get(route('shop.index'), { search: null, page: 1 });
+                                                    }}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                                >
+                                                    ×
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
+                                    <p className="text-gray-600 dark:text-gray-400">
+                                        Discover amazing products available now.
+                                    </p>
+                                </div>
 
                                     {/* Product Cards Grid */}
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
@@ -63,7 +114,7 @@ export default function ProductsIndexCustomer() {
                             ) : (
                                 <div className="text-center py-12">
                                     <p className="text-2xl text-gray-500 dark:text-gray-400 mb-4">No products available</p>
-                                    <p className="text-gray-600 dark:text-gray-400">Check back later for new arrivals!</p>
+                                    <p className="text-gray-600 dark:text-gray-400">Check back later for new arrivals.</p>
                                 </div>
                             )}
                         </div>

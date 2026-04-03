@@ -2,9 +2,36 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import DangerButton from '@/Components/DangerButton';
+import { useState, useEffect, useCallback } from 'react';
+import TextInput from '@/Components/TextInput';
+import InputLabel from '@/Components/InputLabel';
 
-export default function ProductsIndex() {
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
+export default function ProductsIndex({ search: initialSearch }) {
     const { products } = usePage().props;
+    const [search, setSearch] = useState(initialSearch || '');
+
+    const debouncedSearch = useCallback(debounce((value) => {
+        router.get(route('products.index'), { search: value || null, page: 1 }, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    }, 300), []);
+
+    useEffect(() => {
+        debouncedSearch(search);
+    }, [search, debouncedSearch]);
 
     return (
         <AuthenticatedLayout
@@ -20,10 +47,36 @@ export default function ProductsIndex() {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <div className="mb-6 flex justify-end">
-                                <Link href={route('products.create')}>
-                                    <PrimaryButton>Create Product</PrimaryButton>
-                                </Link>
+                            <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                <div className="flex justify-end">
+                                    <Link href={route('products.create')}>
+                                        <PrimaryButton>Create Product</PrimaryButton>
+                                    </Link>
+                                </div>
+                                <div className="w-full lg:w-64">
+                                    <InputLabel value="Search products..." className="sr-only" />
+                                    <div className="relative">
+                                        <TextInput
+                                            type="text"
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
+                                            placeholder="Search products by name or description..."
+                                            className="w-full pr-10"
+                                        />
+                                        {search && (
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSearch('');
+                                                    router.get(route('products.index'), { search: null, page: 1 });
+                                                }}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                            >
+                                                ×
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                             {products?.data?.length > 0 ? (
                                 <>

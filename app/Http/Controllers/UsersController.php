@@ -10,13 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // TODO: Add search/filter if needed
-        return Inertia::render('Users/index', [
-            'users' => User::with('account')->paginate(10)
-        ]);
+        $search = $request->search;
 
+        return Inertia::render('Users/index', [
+            'users' => User::with('account')
+                ->when($search, function ($query, $search) {
+                    return $query->where('first_name', 'LIKE', "%{$search}%")
+                        ->orWhere('last_name', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%");
+                })
+                ->paginate(10),
+            'search' => $search,
+        ]);
     }
 
     public function create()
