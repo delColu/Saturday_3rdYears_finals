@@ -60,8 +60,13 @@ class User extends Authenticatable
     /**
      * Get the account associated with the user.
      */
-    public function account()
+public function account()
     {
         return $this->hasOne(Account::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }

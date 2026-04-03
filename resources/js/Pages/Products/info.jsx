@@ -100,8 +100,35 @@ export default function ProductInfo({ product, relatedProducts }) {
                                 </div>
                             </div>
 
+                            {/* Reviews Section */}
+                            {product.reviews && product.reviews.length > 0 && (
+                                <div className="mt-12">
+                                    <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+                                        Reviews ({product.reviews.length})
+                                    </h2>
+                                    <div className="space-y-4 mb-8">
+                                        {product.reviews.map((review) => (
+                                            <div key={review.id} className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                                                <div className="flex items-center mb-2">
+                                                    <div className="text-lg">
+                                                        {'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}
+                                                    </div>
+                                                    <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                                                        by {review.user.name} on {new Date(review.created_at).toLocaleDateString()}
+                                                    </span>
+                                                </div>
+                                                <p className="text-gray-900 dark:text-gray-100">
+                                                    {review.comment}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Related Products */}
                             {relatedProducts && relatedProducts.length > 0 && (
+
                                 <div className="mt-16">
                                     <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-gray-100">
                                         Related Products

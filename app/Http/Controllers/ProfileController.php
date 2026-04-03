@@ -68,12 +68,28 @@ class ProfileController extends Controller
     /**
      * Display dashboard with recent stats.
      */
-    public function dashboard(Request $request): Response
+public function dashboard(Request $request): Response
     {
+        $user = $request->user()->load('account');
+        $accountType = $user->account?->account_type ?? 'customer';
+
         $recentOrders = Order::with(['user', 'order_items.product'])->latest()->limit(5)->get();
         $recentUsers = User::latest()->limit(5)->get();
         $recentProducts = Product::with('category')->latest()->limit(5)->get();
         $recentPayments = Payment::with('account')->latest()->limit(5)->get();
+
+        $featuredProducts = Product::with('category')
+            ->where('status', 'available')
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        if ($accountType === 'customer') {
+            return Inertia::render('Dashboard_customer', [
+                'user' => $user,
+                'featuredProducts' => $featuredProducts
+            ]);
+        }
 
         return Inertia::render('Dashboard', compact('recentOrders', 'recentUsers', 'recentProducts', 'recentPayments'));
     }

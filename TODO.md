@@ -1,11 +1,7 @@
-# Task: Customer sees Shop instead of Products + customer-only data
+# Pagination Update for Reviews Index
 
 ## Steps:
-1. [x] Edit AuthenticatedLayout.jsx: Add conditionals to hide Users/Products nav for customers.
-2. [x] Edit OrdersController.php: Filter orders by user_id for customers.
-3. [x] CartsController.php: Already filters properly.
-4. [x] Edit PaymentsController.php: Filter payments by user account/user_id.
-5. [ ] Test changes.
-6. [ ] Complete.
-
-All edits done.
+- [x] 1. Update resources/js/Pages/Review/index.jsx pagination to match standard pattern (manual Links with current_page/last_page)
+- [ ] 2. Test pagination on /reviews (run php artisan serve, check links work, pages change)
+- [ ] 3. Seed more reviews if needed for testing: php artisan db:seed --class=ReviewSeeder
+- [ ] 4. Verify across user types (admin sees all, customer sees own)

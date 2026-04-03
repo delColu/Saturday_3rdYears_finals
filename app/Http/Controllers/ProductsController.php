@@ -66,7 +66,7 @@ class ProductsController extends Controller
 
         if ($request->hasFile('image')) {
             // TODO: Delete old image
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $validated['image'] -> $request->file('image')->store('products', 'public');
         }
 
         $product->update($validated);
@@ -100,7 +100,7 @@ class ProductsController extends Controller
             ->get();
 
         return Inertia::render('Products/info', [
-            'product' => $product->load('category'),
+            'product' => $product->load('category', 'reviews.user'),
             'relatedProducts' => $relatedProducts
         ]);
     }

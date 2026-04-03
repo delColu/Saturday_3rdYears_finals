@@ -5,6 +5,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\ReviewsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,8 +36,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/shop', [ProductsController::class, 'shopIndex'])->name('shop.index');
     Route::resource('carts', \App\Http\Controllers\CartsController::class);
     Route::post('/carts/checkout', [\App\Http\Controllers\CartsController::class, 'checkout'])->name('carts.checkout');
+    Route::resource('reviews', ReviewsController::class);
 });
-
-
 
 require __DIR__.'/auth.php';

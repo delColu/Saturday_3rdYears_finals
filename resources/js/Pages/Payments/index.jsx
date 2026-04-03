@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 export default function PaymentsIndex() {
     const { payments } = usePage().props;

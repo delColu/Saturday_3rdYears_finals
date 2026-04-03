@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Payment;
 use App\Models\Order;
 
+
 class PaymentsController extends Controller
 {
     public function __invoke(Request $request)
@@ -54,10 +55,19 @@ class PaymentsController extends Controller
         }
 
         // DEMO: Instant payment success for demo purposes (no real gateway)
+        if (!$user->account) {
+            $user->account()->create([
+                'account_type' => 'Customer',
+                'status' => 'active',
+            ]);
+        }
+
+        $order = Order::findOrFail($request->order_id);
+
         Payment::create([
-            'account_id' => $user->account_id,
-            'order_id' => $request->order_id,
-            'amount' => Order::find($request->order_id)->total_amount,
+            'account_id' => $user->account->id,
+            'order_id' => $order->id,
+            'amount' => $order->total_amount,
             'payment_method' => $request->payment_method,
             'status' => 'success',
         ]);
