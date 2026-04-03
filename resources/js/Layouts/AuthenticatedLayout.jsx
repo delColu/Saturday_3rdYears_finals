@@ -27,22 +27,28 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink href="/dashboard" active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                        {user?.account?.account_type === 'customer' && (
+                            <>
                                 <NavLink href="/shop">
                                     Shop
                                 </NavLink>
                                 <NavLink href="/carts">
                                     Cart
                                 </NavLink>
-{user?.account?.account_type !== 'customer' && (
-                                <>
+                            </>
+                        )}
+
+                        {user?.account?.account_type !== 'customer' && (
+                            <>
                                 <NavLink href="/users">
                                     Users
                                 </NavLink>
                                 <NavLink href="/products">
                                     Products
                                 </NavLink>
-                                </>
-                            )}
+                            </>
+                        )}
+
                                 <NavLink href="/orders">
                                     Orders
                                 </NavLink>
@@ -50,6 +56,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Payments
                                 </NavLink>
                             </div>
+
+
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
