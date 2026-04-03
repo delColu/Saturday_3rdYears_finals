@@ -14,14 +14,25 @@ class UsersController extends Controller
     {
         // TODO: Add search/filter if needed
         return Inertia::render('Users/index', [
-            'users' => User::paginate(10)
+            'users' => User::with('account')->paginate(10)
         ]);
+
     }
 
     public function create()
     {
         // Admin only
-        return Inertia::render('Users/create');
+        $authUserAccountType = auth()->user()->account?->account_type ?? '';
+        $availableTypes = ['customer'];
+        if (stripos($authUserAccountType, 'admin') !== false) {
+            $availableTypes[] = 'admin';
+        }
+        if (stripos($authUserAccountType, 'super') !== false || stripos($authUserAccountType, 'super_admin') !== false) {
+            $availableTypes[] = 'super admin';
+        }
+        return Inertia::render('Users/create', [
+            'available_account_types' => $availableTypes
+        ]);
     }
 
     public function store(Request $request)
@@ -32,11 +43,22 @@ class UsersController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'account_type' => 'required|string|in:customer,admin,super admin',
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
 
-        User::create($validated);
+        $user = User::create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+        ]);
+
+        $user->account()->create([
+            'account_type' => $validated['account_type'],
+            'status' => 'active',
+        ]);
 
         return redirect()->route('users.index');
     }
@@ -44,7 +66,7 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         // Admin only
-        return Inertia::render('Users/Edit', [
+        return Inertia::render('Users/edit', [
             'user' => $user,
         ]);
     }

@@ -24,4 +24,14 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function cart_items()
+    {
+        return $this->hasMany(Cart_items::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }
+

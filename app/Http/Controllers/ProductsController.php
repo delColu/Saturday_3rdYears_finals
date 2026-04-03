@@ -80,4 +80,29 @@ class ProductsController extends Controller
 
         return redirect()->route('products.index');
     }
+
+    public function shopIndex()
+    {
+        return Inertia::render('Products/index_customer', [
+            'products' => Product::with('category')
+                ->where('status', 'available')
+                ->paginate(12)
+        ]);
+    }
+
+    public function show(Product $product)
+    {
+        $relatedProducts = Product::with('category')
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('status', 'available')
+            ->take(4)
+            ->get();
+
+        return Inertia::render('Products/info', [
+            'product' => $product->load('category'),
+            'relatedProducts' => $relatedProducts
+        ]);
+    }
 }
+

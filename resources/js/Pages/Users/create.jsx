@@ -1,15 +1,26 @@
 import { useForm } from '@inertiajs/react';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { InputLabel, PrimaryButton, TextInput, InputError } from '@/Components';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/InputError';
+import { usePage } from '@inertiajs/react';
+import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function Create({ auth }) {
+
+export default function Create({ available_account_types }) {
+  const { auth } = usePage().props;
+  const isSuperAdmin = auth.user?.account?.account_type && /superadmin|super_admin/i.test(auth.user.account.account_type);
+  const accountTypes = available_account_types || ['customer'];
+  if (isSuperAdmin) accountTypes.push('admin', 'super admin');
+
   const { data, setData, post, processing, errors } = useForm({
     first_name: '',
     last_name: '',
     email: '',
     password: '',
     password_confirmation: '',
+    account_type: accountTypes[0],
   });
 
   const submit = (e) => {
@@ -98,6 +109,23 @@ export default function Create({ auth }) {
                     required
                   />
                   <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                  <InputLabel htmlFor="account_type" value="Account Type" />
+                  <select
+                    id="account_type"
+                    name="account_type"
+                    value={data.account_type}
+                    className="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                    onChange={(e) => setData('account_type', e.target.value)}
+                    required
+                  >
+                    {accountTypes.map((type) => (
+                      <option key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1).replace('_', ' ')}</option>
+                    ))}
+                  </select>
+                  <InputError message={errors.account_type} className="mt-2" />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

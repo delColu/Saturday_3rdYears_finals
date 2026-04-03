@@ -1,13 +1,11 @@
-# Task: Add Create, Edit, Delete buttons to Products index page
+# Task: Customer sees Shop instead of Products + customer-only data
 
 ## Steps:
-1. [x] Create TODO.md with this plan
-2. [x] Edit resources/js/Pages/Products/index.jsx: 
-   - Add imports for PrimaryButton, DangerButton
-   - Add Create button above table
-   - Add Actions column header
-   - Add Edit/Delete buttons/actions per row
-3. [ ] Test navigation and functionality
-4. [ ] Mark complete and cleanup TODO.md
+1. [x] Edit AuthenticatedLayout.jsx: Add conditionals to hide Users/Products nav for customers.
+2. [x] Edit OrdersController.php: Filter orders by user_id for customers.
+3. [x] CartsController.php: Already filters properly.
+4. [x] Edit PaymentsController.php: Filter payments by user account/user_id.
+5. [ ] Test changes.
+6. [ ] Complete.
 
-Current progress: Edits complete, test the page at /products.
+All edits done.

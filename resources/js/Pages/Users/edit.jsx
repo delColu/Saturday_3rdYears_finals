@@ -2,7 +2,13 @@ import { useForm } from '@inertiajs/react';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-import { InputLabel, PrimaryButton, TextInput, InputError } from '@/Components';
+// import { InputLabel, PrimaryButton, TextInput, InputError } from '@/Components';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import { usePage } from '@inertiajs/react';
+
 
 export default function Edit({ auth, user }) {
 

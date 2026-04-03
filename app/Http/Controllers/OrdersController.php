@@ -13,8 +13,17 @@ class OrdersController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $user = auth()->user();
+        $isCustomer = $user && $user->account && $user->account->account_type === 'customer';
+
+        $query = Order::with(['user', 'order_items.product']);
+        if ($isCustomer) {
+            $query->where('user_id', $user->id);
+        }
+
         return Inertia::render('Orders/index', [
-            'orders' => Order::with(['user', 'order_items.product'])->paginate(10)
+            'orders' => $query->paginate(10)
         ]);
+
     }
 }

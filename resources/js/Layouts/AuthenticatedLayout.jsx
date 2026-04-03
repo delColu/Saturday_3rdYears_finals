@@ -27,12 +27,22 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink href="/dashboard" active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <NavLink href="/shop">
+                                    Shop
+                                </NavLink>
+                                <NavLink href="/carts">
+                                    Cart
+                                </NavLink>
+{user?.account?.account_type !== 'customer' && (
+                                <>
                                 <NavLink href="/users">
                                     Users
                                 </NavLink>
                                 <NavLink href="/products">
                                     Products
                                 </NavLink>
+                                </>
+                            )}
                                 <NavLink href="/orders">
                                     Orders
                                 </NavLink>
@@ -138,15 +148,21 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' sm:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink href="/dashboard" active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href="/users">Users</ResponsiveNavLink>
-                        <ResponsiveNavLink href="/products">Products</ResponsiveNavLink>
-                        <ResponsiveNavLink href="/orders">Orders</ResponsiveNavLink>
-                        <ResponsiveNavLink href="/payments">Payments</ResponsiveNavLink>
-                    </div>
+                        <div className="space-y-1 pb-3 pt-2">
+                            <ResponsiveNavLink href="/dashboard" active={route().current('dashboard')}>
+                                Dashboard
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href="/shop">Shop</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/carts">Cart</ResponsiveNavLink>
+{user?.account?.account_type !== 'customer' && (
+                            <>
+                            <ResponsiveNavLink href="/users">Users</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/products">Products</ResponsiveNavLink>
+                            </>
+                            )}
+                            <ResponsiveNavLink href="/orders">Orders</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/payments">Payments</ResponsiveNavLink>
+                        </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
                         <div className="px-4">
