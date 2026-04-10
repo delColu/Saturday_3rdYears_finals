@@ -26,7 +26,7 @@ export default function ReviewEdit({ review, products }) {
                         Edit Review
                     </h2>
                     <Link href={route('reviews.index')} className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
-                        Back to Reviews
+                        <PrimaryButton>Back to Reviews</PrimaryButton>
                     </Link>
                 </div>
             }

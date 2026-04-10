@@ -20,10 +20,10 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'product_id' => Product::factory(),
+            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
+            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory(),
             'rating' => fake()->numberBetween(1, 5),
-            'comment' => fake()->optional(0.8)->paragraph(),
+            'comment' => fake()->paragraph(1),
         ];
     }
 }

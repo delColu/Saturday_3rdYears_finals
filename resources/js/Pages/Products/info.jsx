@@ -3,9 +3,18 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useState } from 'react';
+import Modal from '@/Components/Modal';
+import InputError from '@/Components/InputError';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function ProductInfo({ product, relatedProducts }) {
     const [quantity, setQuantity] = useState(1);
+
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
+    const [reviewErrors, setReviewErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+    const [tempRating, setTempRating] = useState(5);
 
     const addToCart = () => {
         router.post(route('carts.store'), {
@@ -15,6 +24,32 @@ export default function ProductInfo({ product, relatedProducts }) {
     };
 
     const imageSrc = product.image ? `/storage/${product.image}` : 'https://via.placeholder.com/500x500?text=No+Image';
+
+    const handleReviewSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        setReviewErrors({});
+
+        try {
+            await router.post(route('reviews.store'), {
+                product_id: product.id,
+                ...reviewForm
+            });
+            setShowReviewModal(false);
+            setReviewForm({ rating: 5, comment: '' });
+            router.reload({ only: ['product'] });
+        } catch (error) {
+            if (error.response?.data?.errors) {
+                setReviewErrors(error.response.data.errors);
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const setRating = (rating) => {
+        setReviewForm(prev => ({ ...prev, rating }));
+    };
 
     return (
         <AuthenticatedLayout
@@ -100,6 +135,12 @@ export default function ProductInfo({ product, relatedProducts }) {
                                 </div>
                             </div>
 
+                            <PrimaryButton
+                                onClick={() => setShowReviewModal(true)}
+                                className="mb-6 px-6 py-2"
+                            >
+                                Write a Review
+                            </PrimaryButton>
                             {/* Reviews Section */}
                             {product.reviews && product.reviews.length > 0 && (
                                 <div className="mt-12">
@@ -114,7 +155,7 @@ export default function ProductInfo({ product, relatedProducts }) {
                                                         {'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}
                                                     </div>
                                                     <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
-                                                        by {review.user.name} on {new Date(review.created_at).toLocaleDateString()}
+                                                        by {review.user.first_name} {review.user.last_name} on {new Date(review.created_at).toLocaleDateString()}
                                                     </span>
                                                 </div>
                                                 <p className="text-gray-900 dark:text-gray-100">
@@ -160,6 +201,78 @@ export default function ProductInfo({ product, relatedProducts }) {
                     </div>
                 </div>
             </div>
+        <Modal show={showReviewModal} onClose={() => {
+            setShowReviewModal(false);
+            setReviewErrors({});
+            setReviewForm({ rating: 5, comment: '' });
+            setTempRating(5);
+        }}>
+            <form onSubmit={handleReviewSubmit} className="p-6">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">Write a Review</h2>
+
+                {/* Star Rating */}
+                <div className="mb-8">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 text-center">Your rating</label>
+                    <div className="flex justify-center">
+                        {[1,2,3,4,5].map((star) => (
+                            <button
+                                key={star}
+                                type="button"
+                                onClick={() => {
+                                    setRating(star);
+                                    setTempRating(star);
+                                }}
+                                onMouseEnter={() => setTempRating(star)}
+                                onMouseLeave={() => setTempRating(reviewForm.rating)}
+                                className={`mx-1 text-3xl cursor-pointer transition-all transform hover:scale-125 ${
+                                    tempRating >= star
+                                        ? 'text-yellow-400 fill-current'
+                                        : 'text-gray-300 dark:text-gray-500'
+                                }`}
+                            >
+                                ★
+                            </button>
+                        ))}
+                    </div>
+                    <InputError className="mt-2">{reviewErrors.rating}</InputError>
+                </div>
+
+                {/* Comment */}
+                <div className="mb-8">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Comment</label>
+                    <textarea
+                        value={reviewForm.comment}
+                        onChange={(e) => setReviewForm(prev => ({ ...prev, comment: e.target.value }))}
+                        rows="5"
+                        className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:text-white p-3 resize-vertical"
+                        placeholder="Share your thoughts about this product..."
+                        disabled={submitting}
+                    />
+                    <InputError className="mt-2">{reviewErrors.comment}</InputError>
+                </div>
+
+                <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4 border-t dark:border-gray-600">
+                    <SecondaryButton
+                        onClick={() => {
+                            setShowReviewModal(false);
+                            setReviewErrors({});
+                            setReviewForm({ rating: 5, comment: '' });
+                            setTempRating(5);
+                        }}
+                        disabled={submitting}
+                    >
+                        Cancel
+                    </SecondaryButton>
+                    <PrimaryButton
+                        className="w-full sm:w-auto"
+                        disabled={submitting}
+                        type="submit"
+                    >
+                        {submitting ? 'Submitting...' : 'Submit Review'}
+                    </PrimaryButton>
+                </div>
+            </form>
+        </Modal>
         </AuthenticatedLayout>
     );
 }

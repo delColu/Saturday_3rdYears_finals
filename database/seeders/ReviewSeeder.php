@@ -12,7 +12,7 @@ class ReviewSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Review::factory(30)->create();
+        \App\Models\Review::factory(20)->create();
     }
 }
 
