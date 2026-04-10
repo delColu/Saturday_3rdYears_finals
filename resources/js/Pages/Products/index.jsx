@@ -20,10 +20,20 @@ const debounce = (func, wait) => {
 
 export default function ProductsIndex({ search: initialSearch }) {
     const { products } = usePage().props;
-    const [search, setSearch] = useState(initialSearch || '');
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setSearch(initialSearch || '');
+    }, []);
+
+    const getCurrentPage = () => {
+        const url = new URL(window.location.href);
+        return parseInt(url.searchParams.get('page')) || 1;
+    };
 
     const debouncedSearch = useCallback(debounce((value) => {
-        router.get(route('products.index'), { search: value || null, page: 1 }, {
+        const currentPage = getCurrentPage();
+        router.get(route('products.index'), { search: value || null, page: currentPage }, {
             preserveState: true,
             preserveScroll: true,
         });
@@ -64,11 +74,12 @@ export default function ProductsIndex({ search: initialSearch }) {
                                             className="w-full pr-10"
                                         />
                                         {search && (
-                                            <button
+                                        <button
                                                 type="button"
                                                 onClick={() => {
+                                                    const currentPage = getCurrentPage();
                                                     setSearch('');
-                                                    router.get(route('products.index'), { search: null, page: 1 });
+                                                    router.get(route('products.index'), { search: null, page: currentPage });
                                                 }}
                                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                             >
@@ -151,10 +162,10 @@ export default function ProductsIndex({ search: initialSearch }) {
                                     </div>
                                     {products.last_page > 1 && (
                                         <div className="flex flex-wrap justify-center gap-2">
-                                            {Array.from({ length: products.last_page }, (_, i) => i + 1).map((page) => (
+{Array.from({ length: products.last_page }, (_, i) => i + 1).map((page) => (
                                                 <Link
                                                     key={page}
-                                                    href={`/products?page=${page}`}
+                                                    href={route('products.index', { page, ...(search && { search }) })}
                                                     className={`px-3 py-2 rounded font-medium transition-colors ${
                                                         products.current_page == page
                                                             ? 'bg-blue-500 text-white'

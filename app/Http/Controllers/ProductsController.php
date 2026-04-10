@@ -49,7 +49,7 @@ class ProductsController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Product created successfully!');
     }
 
     public function edit(Product $product)
@@ -74,7 +74,7 @@ class ProductsController extends Controller
 
         if ($request->hasFile('image')) {
             // TODO: Delete old image
-            $validated['image'] -> $request->file('image')->store('products', 'public');
+            $validated['image'] = $request->file('image')->store('pictures', 'public');
         }
 
         $product->update($validated);

@@ -55,7 +55,7 @@ export default function PaymentsIndex() {
                                                         ${payment.amount}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                                        {payment.method || 'N/A'}
+                                                        {payment.payment_method || 'N/A'}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${

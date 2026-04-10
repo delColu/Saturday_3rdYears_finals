@@ -23,6 +23,7 @@ class ProductFactory extends Factory
             'description' => fake()->paragraph(),
             'price' => fake()->randomFloat(2, 10, 1000),
             'stock' => fake()->numberBetween(0, 100),
+            'image' => 'pictures/tiny_dragon.jpg',
         ];
     }
 }

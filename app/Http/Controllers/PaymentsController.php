@@ -45,7 +45,7 @@ class PaymentsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'payment_method' => 'required|string|in:card,paypal,bank',
+            'payment_method' => 'required|string|in:card,paypal,bank,cash',
             'order_id' => 'required|exists:orders,id',
         ]);
 

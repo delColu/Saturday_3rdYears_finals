@@ -14,7 +14,7 @@ export default function Create({ auth, categories }) {
 
     description: '',
 
-    status: 'active',
+    status: 'available',
 
     price: '',
 
@@ -50,7 +50,7 @@ export default function Create({ auth, categories }) {
 
           <div className="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
 
-            <form onSubmit={submit} encType="multipart/form-data">
+            <form onSubmit={submit} enctype="multipart/form-data">
 
               <div>
 
@@ -212,16 +212,11 @@ export default function Create({ auth, categories }) {
 
                 />
 
-                {progress && (
-
+                {progress && progress.bytes && progress.total && (
                   <div className="mt-2 text-sm text-gray-500">
-
-                    Uploading {progress.percentage()}%
-
+                    Uploading {Math.round((progress.bytes / progress.total) * 100)}%
                   </div>
-
                 )}
-
                 <InputError message={errors.image} className="mt-2" />
 
               </div>

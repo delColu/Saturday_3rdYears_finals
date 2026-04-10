@@ -70,7 +70,7 @@ export default function ProductInfo({ product, relatedProducts }) {
                                         </span>
                                     </div>
 
-                                    <div className="prose dark:prose-invert max-w-none">
+                                    <div className="prose dark:prose-invert max-w-none bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm">
                                         <div dangerouslySetInnerHTML={{ __html: product.description || 'No description available.' }} />
                                     </div>
 

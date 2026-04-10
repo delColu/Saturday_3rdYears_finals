@@ -20,10 +20,20 @@ const debounce = (func, wait) => {
 
 export default function UsersIndex({ search: initialSearch }) {
     const { auth, users, search: propSearch } = usePage().props;
-    const [search, setSearch] = useState(initialSearch || propSearch || '');
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setSearch(initialSearch || propSearch || '');
+    }, []);
+
+const getCurrentPage = () => {
+        const url = new URL(window.location.href);
+        return parseInt(url.searchParams.get('page')) || 1;
+    };
 
     const debouncedSearch = useCallback(debounce((value) => {
-        router.get(route('users.index'), { search: value || null, page: 1 }, {
+        const currentPage = getCurrentPage();
+        router.get(route('users.index'), { search: value || null, page: currentPage }, {
             preserveState: true,
             preserveScroll: true,
         });
@@ -79,8 +89,9 @@ const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.
                                             <button
                                                 type="button"
                                                 onClick={() => {
+                                                    const currentPage = getCurrentPage();
                                                     setSearch('');
-                                                    router.get(route('users.index'), { search: null, page: 1 });
+                                                    router.get(route('users.index'), { search: null, page: currentPage });
                                                 }}
                                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                             >
@@ -156,10 +167,10 @@ const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.
                                     </div>
                                     {users.last_page > 1 && (
                                         <div className="flex flex-wrap justify-center gap-2">
-                                            {Array.from({ length: users.last_page }, (_, i) => i + 1).map((page) => (
+{Array.from({ length: users.last_page }, (_, i) => i + 1).map((page) => (
                                                 <Link
                                                     key={page}
-                                                    href={`/users?page=${page}`}
+                                                    href={route('users.index', { page, ...(search && { search }) })}
                                                     className={`px-3 py-2 rounded font-medium transition-colors ${
                                                         users.current_page == page
                                                             ? 'bg-blue-500 text-white'
