@@ -100,6 +100,9 @@ export default function ProductsIndex({ search: initialSearch }) {
                                                     Category
                                                     </th>
                                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                    Stock
+                                                    </th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                         Actions
                                                     </th>
                                                 </tr>
@@ -122,6 +125,9 @@ export default function ProductsIndex({ search: initialSearch }) {
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                                         {product.category?.name || 'N/A'}
                                                         </td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                                        {product.stock || 'N/A'}
+                                                        </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                             <div className="flex items-center space-x-2">
                                                                 <Link href={route('products.edit', product.id)}>
@@ -133,9 +139,8 @@ export default function ProductsIndex({ search: initialSearch }) {
                                                                             router.delete(route('products.destroy', product.id));
                                                                         }
                                                                     }}
-                                                                    className="px-3 py-1 text-xs bg-red-600 hover:bg-red-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                                                                 >
-                                                                    Delete
+                                                                    <DangerButton className="px-3 py-1 text-xs">Delete</DangerButton>
                                                                 </button>
                                                             </div>
                                                         </td>

@@ -20,7 +20,7 @@ export default function DashboardCustomer({ user, featuredProducts }) {
                     {/* Hero Section */}
                     <div className="bg-blue-600 rounded-xl shadow-2xl overflow-hidden mb-12 p-12 text-white text-center border-4 border-blue-700">
                         <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                            Discover Amazing Products
+                            Generic Shopping Website - Your One-Stop Shop for almost everything
                         </h1>
                         <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
                             Welcome to Generic shopping website! Browse our latest featured products and start shopping today.

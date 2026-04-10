@@ -4,6 +4,7 @@ import DangerButton from '@/Components/DangerButton';
 import { useState, useEffect, useCallback } from 'react';
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 const debounce = (func, wait) => {
   let timeout;
@@ -141,7 +142,7 @@ const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.
                                                                     href={route('users.edit', user.id)}
                                                                     className="text-indigo-600 hover:text-indigo-900 mr-3"
                                                                 >
-                                                                    Edit
+                                                                    <PrimaryButton className="px-3 py-1 text-xs">Edit</PrimaryButton>
                                                                 </Link>
                                                                 <DangerButton onClick={() => deleteUser(user.id)}>
                                                                     Delete

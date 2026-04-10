@@ -38,7 +38,7 @@ export default function Edit({ auth, product, categories }) {
 
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+          <div className="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
 
             <form onSubmit={submit} encType="multipart/form-data">
 
