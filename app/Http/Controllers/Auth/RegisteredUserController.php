@@ -48,7 +48,7 @@ $user = User::create([
 
         Account::create([
             'user_id' => $user->id,
-            'account_type' => 'Customer',
+            'account_type' => 'customer',
             'status' => 'active',
         ]);
 

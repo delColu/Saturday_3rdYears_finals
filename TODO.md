@@ -1,13 +1,1 @@
-# Task: Make Application Logo icon show
-
-## Steps:
-1. [x] Create TODO.md with steps
-2. [x] Copy grocery-store.png to public/grocery-store.png
-3. [x] Update ApplicationLogo.jsx className for flexibility
-4. [x] Edit AuthenticatedLayout.jsx className
-5. [x] Edit GuestLayout.jsx className
-6. [x] Run `php artisan storage:link`
-7. [x] Run `npm run dev`
-8. [x] Mark complete and attempt_completion
-
-Progress: Complete! Dev server at http://localhost:5174. Icon now shows via /grocery-store.png with proper img classes. Test by visiting the app.
+# Task: Fix search/filter bar in Products/index_customer.jsx\n\n## Steps:\n\n### 1. [ ] Create TODO.md (current step)\n### 2. [ ] Edit resources/js/Pages/Products/index_customer.jsx:\n   - Move search/filter UI outside products.length conditional\n   - Wrap search+filter in flex container for side-by-side symmetry (gap-4, equal max-w-md widths, remove ml-4)\n   - Update clear button logic if needed\n### 3. [ ] Verify:\n   - Search bar persists on empty results\n   - Side-by-side symmetrical layout\n   - Functionality intact (debounce, pagination)\n### 4. [x] Complete task\n\n**Status: Starting implementation...**

@@ -12,6 +12,8 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
+        // Admin middleware already protects this route
+
         $search = $request->search;
 
         return Inertia::render('Users/index', [
@@ -30,7 +32,7 @@ class UsersController extends Controller
     {
         // Admin only
         $authUserAccountType = auth()->user()->account?->account_type ?? '';
-        $availableTypes = ['customer'];
+            $availableTypes = ['customer'];
         if (stripos($authUserAccountType, 'admin') !== false) {
             $availableTypes[] = 'admin';
         }

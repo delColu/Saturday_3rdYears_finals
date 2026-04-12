@@ -38,7 +38,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             </>
                         )}
 
-                        {user?.account?.account_type !== 'customer' && (
+{(user?.account?.account_type && !/customer/i.test(user.account.account_type)) && (
                             <>
                                 <NavLink href="/users">
                                     Users
@@ -166,7 +166,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             </ResponsiveNavLink>
                             <ResponsiveNavLink href="/shop">Shop</ResponsiveNavLink>
                             <ResponsiveNavLink href="/carts">Cart</ResponsiveNavLink>
-{user?.account?.account_type !== 'customer' && (
+{(user?.account?.account_type && !/customer/i.test(user.account.account_type)) && (
                             <>
                             <ResponsiveNavLink href="/users">Users</ResponsiveNavLink>
                             <ResponsiveNavLink href="/products">Products</ResponsiveNavLink>

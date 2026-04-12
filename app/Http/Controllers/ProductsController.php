@@ -26,6 +26,8 @@ class ProductsController extends Controller
 
     public function create()
     {
+        // Admin middleware already protects this route
+
         return Inertia::render('Products/create', [
             'categories' => Category::select('id', 'name')->get()
         ]);
@@ -92,16 +94,26 @@ class ProductsController extends Controller
     public function shopIndex(Request $request)
     {
         $search = $request->search;
+        $categoryId = $request->category_id;
+
+        $categories = Category::select('id', 'name')->get();
+
+        $products = Product::with('category')
+            ->where('status', 'available')
+            ->when($categoryId, function ($query, $categoryId) {
+                return $query->where('category_id', $categoryId);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%");
+            })
+            ->paginate(12);
 
         return Inertia::render('Products/index_customer', [
-            'products' => Product::with('category')
-                ->where('status', 'available')
-                ->when($search, function ($query, $search) {
-                    return $query->where('name', 'LIKE', "%{$search}%")
-                        ->orWhere('description', 'LIKE', "%{$search}%");
-                })
-                ->paginate(12),
+            'products' => $products,
+            'categories' => $categories,
             'search' => $search,
+            'selectedCategory' => $categoryId,
         ]);
     }
 
