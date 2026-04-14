@@ -3,6 +3,9 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
 import Items from './items.jsx';
+import PrimaryButton from '@/Components/PrimaryButton.jsx';
+import DangerButton from '@/Components/DangerButton.jsx';
+import SecondaryButton from '@/Components/SecondaryButton.jsx';
 
 export default function OrdersIndex() {
     const { orders } = usePage().props;
@@ -68,13 +71,13 @@ export default function OrdersIndex() {
                                                         {new Date(order.created_at).toLocaleDateString()}
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                                            <Link
-                                                                href={route('orders.edit', order.id)}
-                                                                className="px-3 py-1 bg-indigo-500 text-white text-xs rounded hover:bg-indigo-600 transition-colors"
-                                                            >
-                                                                Edit
-                                                            </Link>
-                                                            <button
+                                                            <PrimaryButton>
+                                                                <Link
+                                                                    href={route('orders.edit', order.id)}>
+                                                                    Edit
+                                                                </Link>
+                                                            </PrimaryButton>
+                                                            <SecondaryButton
                                                                 onClick={() => {
                                                                     setSelectedOrder(order);
                                                                     setShowItemsModal(true);
@@ -82,7 +85,7 @@ export default function OrdersIndex() {
                                                                 className="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
                                                             >
                                                                 View Items
-                                                            </button>
+                                                            </SecondaryButton>
                                                         </td>
                                                     </tr>
                                                 ))}

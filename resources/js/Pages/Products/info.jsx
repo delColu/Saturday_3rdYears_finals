@@ -131,16 +131,15 @@ export default function ProductInfo({ product, relatedProducts }) {
                                         >
                                             Add to Cart
                                         </PrimaryButton>
+                                        <PrimaryButton
+                                            onClick={() => setShowReviewModal(true)}
+                                            className="px-8 py-3 text-lg"
+                                        >
+                                            Write a Review
+                                        </PrimaryButton>
                                     </div>
                                 </div>
                             </div>
-
-                            <PrimaryButton
-                                onClick={() => setShowReviewModal(true)}
-                                className="mb-6 px-6 py-2"
-                            >
-                                Write a Review
-                            </PrimaryButton>
                             {/* Reviews Section */}
                             {product.reviews && product.reviews.length > 0 && (
                                 <div className="mt-12">

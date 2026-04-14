@@ -1,28 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { router } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
-import PrimaryButton from '@/Components/PrimaryButton';
+import { useState } from 'react';
 import InputLabel from '@/Components/InputLabel';
 
-export default function PaymentEdit({ payment }) {
-    const { flash, auth } = usePage().props;
-    const isAdmin = auth?.user?.account?.account_type?.toLowerCase().includes('admin');
-
-    useEffect(() => {
-        if (!isAdmin) {
-            router.visit(route('payments.index'));
-        }
-    }, [isAdmin]);
-
-    const [status, setStatus] = useState(payment.status || 'pending');
-
-    const submit = (e) => {
-        e.preventDefault();
-        router.put(route('payments.update', payment.id), {
-            status: status
-        });
-    };
+export default function PaymentShow({ payment }) {
+    const { flash } = usePage().props;
 
     const items = payment.order?.order_items || [];
     const total = parseFloat(payment.amount || 0);
@@ -35,11 +17,11 @@ export default function PaymentEdit({ payment }) {
         <AuthenticatedLayout
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Edit Payment #{payment.id}
+                    Payment #{payment.id} Details
                 </h2>
             }
         >
-            <Head title={`Edit Payment ${payment.id}`} />
+            <Head title={`Payment ${payment.id}`} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -51,7 +33,7 @@ export default function PaymentEdit({ payment }) {
                                 </div>
                             )}
 
-                            {/* Payment Details */}
+                            {/* Payment Details - Read Only */}
                             <div className="mb-8">
                                 <h3 className="text-lg font-semibold mb-4">Payment Details</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -61,19 +43,14 @@ export default function PaymentEdit({ payment }) {
                                     </div>
                                     <div>
                                         <InputLabel value="Status" className="block text-sm font-medium mb-1" />
-                                        <form onSubmit={submit} className="flex items-center space-x-2">
-                                            <select
-                                                value={status}
-                                                onChange={(e) => setStatus(e.target.value)}
-                                                className="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-                                            >
-                                                <option value="pending">Pending</option>
-                                                <option value="success">Success</option>
-                                                <option value="failed">Failed</option>
-                                                <option value="refunded">Refunded</option>
-                                            </select>
-                                            <PrimaryButton type="submit">Update Status</PrimaryButton>
-                                        </form>
+                                        <span className={`px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full ${
+                                            payment.status === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' :
+                                            payment.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100' :
+                                            payment.status === 'refunded' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100' :
+                                            'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100'
+                                        }`}>
+                                            {payment.status || 'pending'}
+                                        </span>
                                     </div>
                                     <div>
                                         <InputLabel value="Customer" className="block text-sm font-medium mb-1" />

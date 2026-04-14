@@ -28,7 +28,7 @@ class PaymentsController extends Controller
     }
 
     /**
-     * Display the specified payment.
+     * Display the specified payment for editing (admin).
      */
     public function show(Payment $payment)
     {
@@ -42,6 +42,25 @@ class PaymentsController extends Controller
         $payment->load(['account.user', 'order.order_items.product']);
 
         return Inertia::render('Payments/edit', [
+            'payment' => $payment
+        ]);
+    }
+
+    /**
+     * Display the specified payment for viewing (customer/admin).
+     */
+    public function view(Payment $payment)
+    {
+        $user = auth()->user();
+        $isCustomer = $user && $user->account && $user->account->account_type === 'customer';
+
+        if ($isCustomer && $payment->account->user_id !== $user->id) {
+            abort(403);
+        }
+
+        $payment->load(['account.user', 'order.order_items.product']);
+
+        return Inertia::render('Payments/show', [
             'payment' => $payment
         ]);
     }

@@ -1,9 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { Link, usePage } from '@inertiajs/react';
+import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function PaymentsIndex() {
-    const { payments } = usePage().props;
+    const { payments, auth } = usePage().props;
+    const isAdmin = auth?.user?.account?.account_type?.toLowerCase().includes('admin');
 
     return (
         <AuthenticatedLayout
@@ -37,8 +40,11 @@ export default function PaymentsIndex() {
                                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                         Method
                                                     </th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                         Status
+                                                    </th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                        Actions
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -66,7 +72,21 @@ export default function PaymentsIndex() {
                                                             {payment.status || 'pending'}
                                                         </span>
                                                     </td>
-                                                </tr>
+                                                <td className="px-6 py-4 text-left text-sm">
+                                                <PrimaryButton>
+                                                    <Link href={route('payments.show', payment.id)}>
+                                                    View
+                                                    </Link>
+                                                </PrimaryButton>
+
+                                                {isAdmin && (
+                                                    <SecondaryButton className="ml-2">
+                                                    <Link href={route('payments.edit', payment.id)}>
+                                                        Edit
+                                                    </Link>
+                                                    </SecondaryButton>
+                                                )}
+                                                </td>                                                </tr>
                                             ))}
                                         </tbody>
                                     </table>
