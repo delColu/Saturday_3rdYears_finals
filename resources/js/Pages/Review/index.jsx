@@ -1,6 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import PrimaryButton from '@/Components/PrimaryButton';
+import DangerButton from '@/Components/DangerButton';
 
 export default function ReviewsIndex({ reviews, isAdmin }) {
     const { auth } = usePage().props;
@@ -62,10 +64,10 @@ export default function ReviewsIndex({ reviews, isAdmin }) {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <Link href={route('reviews.edit', review.id)} className="text-indigo-600 hover:text-indigo-900 mr-4">
-                                                        Edit
+                                                        <PrimaryButton>Edit</PrimaryButton>
                                                     </Link>
                                                     <button onClick={() => destroyReview(review.id)} className="text-red-600 hover:text-red-900">
-                                                        Delete
+                                                        <DangerButton>Delete</DangerButton>
                                                     </button>
                                                 </td>
                                             </tr>

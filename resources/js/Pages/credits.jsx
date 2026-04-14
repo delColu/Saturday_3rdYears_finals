@@ -1,9 +1,9 @@
 import { Head, Link } from '@inertiajs/react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import CreditsLayout from '@/Layouts/CreditsLayout';
 
 export default function Credits({ auth }) {
     return (
-        <GuestLayout>
+        <CreditsLayout>
             <Head title="Credits" />
 
             <div className="py-12">
@@ -15,7 +15,7 @@ export default function Credits({ auth }) {
                                     Credits
                                 </h1>
                                 <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                                    Built with ❤️ for learning Laravel & Inertia.js
+                                    Saturday project to build a full-stack e-commerce app with Laravel, Inertia.js, and React.
                                 </p>
                             </div>
 
@@ -23,7 +23,7 @@ export default function Credits({ auth }) {
                                 <div>
                                     <h2 className="text-2xl font-bold mb-6">Developer</h2>
                                     <p className="text-lg mb-4">
-                                        This project was developed by: <strong>You (the amazing developer!)</strong>
+                                        This project was developed by: <strong>Me (Mostly)</strong>
                                     </p>
                                     <p className="text-gray-600 dark:text-gray-400">
                                         Full-stack e-commerce app with authentication, carts, orders, payments, and reviews.
@@ -70,6 +70,6 @@ export default function Credits({ auth }) {
                     </div>
                 </div>
             </div>
-        </GuestLayout>
+        </CreditsLayout>
     );
 }

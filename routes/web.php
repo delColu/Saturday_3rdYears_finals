@@ -48,8 +48,12 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
 
-    Route::get('/orders', OrdersController::class)->name('orders.index');
-    Route::get('/payments', PaymentsController::class)->name('payments.index');
+    Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.edit');
+    Route::put('/orders/{order}', [OrdersController::class, 'update'])->name('orders.update');
+    Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{payment}', [PaymentsController::class, 'show'])->name('payments.edit');
+    Route::put('/payments/{payment}', [PaymentsController::class, 'update'])->name('payments.update');
     Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store');
     Route::get('/payments/confirm/{order}', [PaymentsController::class, 'confirm'])->name('payments.confirm');
     Route::get('/shop', [ProductsController::class, 'shopIndex'])->name('shop.index');

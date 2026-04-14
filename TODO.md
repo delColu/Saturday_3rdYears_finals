@@ -1,1 +1,9 @@
-# Task: Fix search/filter bar in Products/index_customer.jsx\n\n## Steps:\n\n### 1. [ ] Create TODO.md (current step)\n### 2. [ ] Edit resources/js/Pages/Products/index_customer.jsx:\n   - Move search/filter UI outside products.length conditional\n   - Wrap search+filter in flex container for side-by-side symmetry (gap-4, equal max-w-md widths, remove ml-4)\n   - Update clear button logic if needed\n### 3. [ ] Verify:\n   - Search bar persists on empty results\n   - Side-by-side symmetrical layout\n   - Functionality intact (debounce, pagination)\n### 4. [x] Complete task\n\n**Status: Starting implementation...**
+# TODO: Make Payments/edit.jsx Functional
+
+## Steps:
+1. [ ] Update PaymentsController.php: Rename __invoke→index, add show/update methods
+2. [ ] Update routes/web.php: Add payments.edit/show, payments.update routes  
+3. [ ] Create resources/js/Pages/Payments/edit.jsx: Full edit page with details, status form
+4. [ ] Update resources/js/Pages/Payments/index.jsx: Add Edit link
+5. [ ] Test routes/data/page
+6. [ ] Complete

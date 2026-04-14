@@ -67,7 +67,13 @@ export default function OrdersIndex() {
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                                         {new Date(order.created_at).toLocaleDateString()}
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                                            <Link
+                                                                href={route('orders.edit', order.id)}
+                                                                className="px-3 py-1 bg-indigo-500 text-white text-xs rounded hover:bg-indigo-600 transition-colors"
+                                                            >
+                                                                Edit
+                                                            </Link>
                                                             <button
                                                                 onClick={() => {
                                                                     setSelectedOrder(order);
