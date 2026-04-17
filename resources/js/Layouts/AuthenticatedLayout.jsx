@@ -59,6 +59,9 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink href="/reviews">
                                         Reviews
                                 </NavLink>
+                                <NavLink href="/reports">
+                                    Reports
+                                </NavLink>
                             </div>
 
 
@@ -174,6 +177,8 @@ export default function AuthenticatedLayout({ header, children }) {
                             )}
                             <ResponsiveNavLink href="/orders">Orders</ResponsiveNavLink>
                             <ResponsiveNavLink href="/payments">Payments</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/reviews">Reviews</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/reports">Reports</ResponsiveNavLink>
                         </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">

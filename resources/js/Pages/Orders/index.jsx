@@ -8,7 +8,8 @@ import DangerButton from '@/Components/DangerButton.jsx';
 import SecondaryButton from '@/Components/SecondaryButton.jsx';
 
 export default function OrdersIndex() {
-    const { orders } = usePage().props;
+    const { orders, auth } = usePage().props;
+    const isAdmin = auth?.user?.account?.account_type?.toLowerCase().includes('admin');
     const [showItemsModal, setShowItemsModal] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -71,12 +72,15 @@ export default function OrdersIndex() {
                                                         {new Date(order.created_at).toLocaleDateString()}
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+
+                                                        {isAdmin && (
                                                             <PrimaryButton>
                                                                 <Link
                                                                     href={route('orders.edit', order.id)}>
                                                                     Edit
                                                                 </Link>
                                                             </PrimaryButton>
+                                                        )}
                                                             <SecondaryButton
                                                                 onClick={() => {
                                                                     setSelectedOrder(order);

@@ -14,7 +14,6 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-
         'user_id',
         'total_amount',
         'status',
@@ -23,6 +22,19 @@ class Order extends Model
         'delivered_at',
         'paid_at',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($order) {
+            \App\Models\Report::create([
+                'user_id' => $order->user_id,
+                'action' => 'Order Created',
+                'description' => "New order #{$order->id} for total {$order->total_amount}"
+            ]);
+        });
+    }
 
     public function user()
     {
@@ -33,6 +45,4 @@ class Order extends Model
     {
         return $this->hasMany(Order_items::class);
     }
-
-
 }

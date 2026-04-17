@@ -72,21 +72,24 @@ export default function PaymentsIndex() {
                                                             {payment.status || 'pending'}
                                                         </span>
                                                     </td>
-                                                <td className="px-6 py-4 text-left text-sm">
-                                                <PrimaryButton>
-                                                    <Link href={route('payments.show', payment.id)}>
-                                                    View
-                                                    </Link>
-                                                </PrimaryButton>
+                                                    <td className="px-6 py-4 text-left text-sm">
+                                                            <PrimaryButton>
+                                                                <Link
+                                                                    href={route('payments.show', payment.id)}>
+                                                                    View
+                                                                </Link>
+                                                            </PrimaryButton>
 
-                                                {isAdmin && (
-                                                    <SecondaryButton className="ml-2">
-                                                    <Link href={route('payments.edit', payment.id)}>
-                                                        Edit
-                                                    </Link>
-                                                    </SecondaryButton>
-                                                )}
-                                                </td>                                                </tr>
+                                                            {isAdmin && (
+                                                                <SecondaryButton>
+                                                                    <Link
+                                                                        href={route('payments.edit', payment.id)}>
+                                                                        Edit
+                                                                    </Link>
+                                                                </SecondaryButton>
+                                                            )}
+                                                    </td>
+                                                </tr>
                                             ))}
                                         </tbody>
                                     </table>

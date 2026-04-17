@@ -65,4 +65,11 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::resource('reviews', ReviewsController::class);
 });
 
+    // Reports routes
+    Route::middleware(['auth', 'admin'])->prefix('reports')->name('reports.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\ReportsController::class, 'index'])->name('index');
+        Route::get('/pdf/{period?}', [\App\Http\Controllers\ReportsController::class, 'generatePdf'])->name('pdf');
+
+    });
+
 require __DIR__.'/auth.php';
