@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Order;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Log;
 
 class OrdersController extends Controller
 {
@@ -62,7 +65,16 @@ class OrdersController extends Controller
             'status' => 'required|in:Pending,Confirmed,Shipped,Delivered,Cancelled'
         ]);
 
+$oldStatus = $order->status;
         $order->update($request->only('status'));
+
+        Log::info('Order status update - ID: ' . $order->id . ', old: ' . $oldStatus . ', new: ' . $request->status);
+        $order->load(['user']);
+        if ($request->status === 'Shipped' && $oldStatus !== 'Shipped') {
+            Log::info('Sending shipped email to ' . $order->user->email . ' for order ' . $order->id);
+            Mail::to($order->user->email)->send(new OrderShipped($order));
+            Log::info('Shipped email sent for order ' . $order->id);
+        }
 
         return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }

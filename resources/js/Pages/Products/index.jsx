@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import DangerButton from '@/Components/DangerButton';
@@ -44,7 +44,7 @@ export default function ProductsIndex({ search: initialSearch }) {
     }, [search, debouncedSearch]);
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     Products
@@ -185,6 +185,6 @@ export default function ProductsIndex({ search: initialSearch }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }

@@ -1,9 +1,9 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link } from '@inertiajs/react';
 
 export default function Dashboard({ recentOrders, recentUsers, recentProducts, recentPayments }) {
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                     Dashboard
@@ -136,6 +136,6 @@ export default function Dashboard({ recentOrders, recentUsers, recentProducts, r
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }

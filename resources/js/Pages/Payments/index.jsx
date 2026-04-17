@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head } from '@inertiajs/react';
 import { Link, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -9,7 +9,7 @@ export default function PaymentsIndex() {
     const isAdmin = auth?.user?.account?.account_type?.toLowerCase().includes('admin');
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     Payments
@@ -73,21 +73,19 @@ export default function PaymentsIndex() {
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4 text-left text-sm">
-                                                            <PrimaryButton>
-                                                                <Link
-                                                                    href={route('payments.show', payment.id)}>
-                                                                    View
-                                                                </Link>
-                                                            </PrimaryButton>
+                                                    <PrimaryButton>
+                                                        <Link href={route('payments.show', payment.id)}>
+                                                        View
+                                                        </Link>
+                                                    </PrimaryButton>
 
-                                                            {isAdmin && (
-                                                                <SecondaryButton>
-                                                                    <Link
-                                                                        href={route('payments.edit', payment.id)}>
-                                                                        Edit
-                                                                    </Link>
-                                                                </SecondaryButton>
-                                                            )}
+                                                    {isAdmin && (
+                                                        <SecondaryButton className="ml-2">
+                                                        <Link href={route('payments.edit', payment.id)}>
+                                                            Edit
+                                                        </Link>
+                                                        </SecondaryButton>
+                                                    )}
                                                     </td>
                                                 </tr>
                                             ))}
@@ -119,6 +117,6 @@ export default function PaymentsIndex() {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }

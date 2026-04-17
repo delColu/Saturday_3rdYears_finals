@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import DangerButton from '@/Components/DangerButton';
@@ -30,7 +30,7 @@ export default function CartsIndex() {
     };
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     Shopping Cart
@@ -163,7 +163,7 @@ export default function CartsIndex() {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }
 

@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer.jsx';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
@@ -14,7 +14,7 @@ export default function OrdersIndex() {
     const [selectedOrder, setSelectedOrder] = useState(null);
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     Orders
@@ -129,6 +129,6 @@ export default function OrdersIndex() {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }

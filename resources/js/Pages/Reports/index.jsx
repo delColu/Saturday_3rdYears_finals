@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 
@@ -12,7 +12,7 @@ export default function Index({ auth, reports }) {
     ];
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -114,7 +114,7 @@ export default function Index({ auth, reports }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }
 

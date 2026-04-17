@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
 
@@ -6,7 +6,7 @@ export default function DashboardCustomer({ user, featuredProducts }) {
     const { auth } = usePage().props;
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     Welcome back, {user.first_name} {user.last_name}!
@@ -69,6 +69,6 @@ export default function DashboardCustomer({ user, featuredProducts }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }

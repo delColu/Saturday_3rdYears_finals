@@ -56,6 +56,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('/payments/{payment}', [PaymentsController::class, 'show'])->name('payments.edit');
         Route::put('/payments/{payment}', [PaymentsController::class, 'update'])->name('payments.update');
+        Route::get('/payments/email/{order}', [PaymentsController::class, 'previewEmail'])->name('payments.email');
     });
     Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store');
     Route::get('/payments/confirm/{order}', [PaymentsController::class, 'confirm'])->name('payments.confirm');

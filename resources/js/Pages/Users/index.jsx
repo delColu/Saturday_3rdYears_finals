@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import DangerButton from '@/Components/DangerButton';
 import { useState, useEffect, useCallback } from 'react';
@@ -51,7 +51,7 @@ const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.
     };
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayoutCustomer
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                     Users
@@ -190,6 +190,6 @@ const isAdminPlus = auth.user?.account?.account_type && /admin/i.test(auth.user.
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayoutCustomer>
     );
 }

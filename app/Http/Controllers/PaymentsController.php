@@ -135,4 +135,23 @@ class PaymentsController extends Controller
 
         return redirect()->route('payments.index')->with('message', 'Payment successful!');
     }
+
+    /**
+     * Preview the shipped email for an order (admin only).
+     */
+    public function previewEmail(Order $order)
+    {
+        $user = auth()->user();
+        $isCustomer = $user && $user->account && $user->account->account_type === 'customer';
+
+        if ($isCustomer && $order->user_id !== $user->id) {
+            abort(403);
+        }
+
+        $order->load(['user', 'order_items.product']);
+
+        return Inertia::render('Payments/email', [
+            'order' => $order
+        ]);
+    }
 }
