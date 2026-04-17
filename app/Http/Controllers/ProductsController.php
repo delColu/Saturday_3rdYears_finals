@@ -99,6 +99,8 @@ class ProductsController extends Controller
         $categories = Category::select('id', 'name')->get();
 
         $products = Product::with('category')
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->where('status', 'available')
             ->when($categoryId, function ($query, $categoryId) {
                 return $query->where('category_id', $categoryId);
