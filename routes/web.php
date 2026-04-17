@@ -49,7 +49,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
 
     Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.edit');
+    Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/edit', [OrdersController::class, 'edit'])->name('orders.edit');
     Route::put('/orders/{order}', [OrdersController::class, 'update'])->name('orders.update');
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
     Route::get('/payments/{payment}/show', [PaymentsController::class, 'view'])->name('payments.show');

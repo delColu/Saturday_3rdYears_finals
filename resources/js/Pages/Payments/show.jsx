@@ -68,7 +68,7 @@ export default function PaymentShow({ payment }) {
                                         <div>
                                             <InputLabel value="Order" className="block text-sm font-medium mb-1" />
                                             <Link
-                                                href={route('orders.edit', payment.order.id)}
+                                                href={route('orders.show', payment.order.id)}
                                                 className="text-blue-600 hover:text-blue-500 font-medium"
                                             >
                                                 #{payment.order.id}

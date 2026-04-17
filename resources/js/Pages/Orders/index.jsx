@@ -76,8 +76,8 @@ export default function OrdersIndex() {
                                                         {isAdmin && (
                                                             <PrimaryButton>
                                                                 <Link
-                                                                    href={route('orders.edit', order.id)}>
-                                                                    Edit
+                                                                    href={route('orders.show', order.id)}>
+                                                                    View
                                                                 </Link>
                                                             </PrimaryButton>
                                                         )}

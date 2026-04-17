@@ -44,6 +44,28 @@ class OrdersController extends Controller
 
         $order->load(['user', 'order_items.product']);
 
+        return Inertia::render('Orders/show', [
+            'order' => $order,
+            'auth' => [
+                'user' => $user
+            ]
+        ]);
+    }
+
+    /**
+     * Show edit form for the specified order (admin only).
+     */
+    public function edit(Order $order)
+    {
+        $user = auth()->user();
+        $isCustomer = $user && $user->account && $user->account->account_type === 'customer';
+
+        if ($isCustomer || $order->user_id !== $user->id) {
+            abort(403);
+        }
+
+        $order->load(['user', 'order_items.product']);
+
         return Inertia::render('Orders/edit', [
             'order' => $order
         ]);

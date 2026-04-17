@@ -2,10 +2,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { useState } from 'react';
+import SecondaryButton from '@/Components/SecondaryButton';
+import QRCodeSection from '@/Components/QRCodeSection';
+import { useEffect, useState } from 'react';
 import Modal from '@/Components/Modal';
 import InputError from '@/Components/InputError';
-import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function ProductInfo({ product, relatedProducts }) {
     const [quantity, setQuantity] = useState(1);
@@ -50,6 +51,8 @@ export default function ProductInfo({ product, relatedProducts }) {
     const setRating = (rating) => {
         setReviewForm(prev => ({ ...prev, rating }));
     };
+
+    const productUrl = window.location.origin + route('products.show', product.id);
 
     return (
         <AuthenticatedLayout
@@ -168,7 +171,6 @@ export default function ProductInfo({ product, relatedProducts }) {
 
                             {/* Related Products */}
                             {relatedProducts && relatedProducts.length > 0 && (
-
                                 <div className="mt-16">
                                     <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-gray-100">
                                         Related Products
@@ -196,6 +198,12 @@ export default function ProductInfo({ product, relatedProducts }) {
                                     </div>
                                 </div>
                             )}
+
+                            {/* QR Code Section */}
+                            <QRCodeSection
+                                productUrl={productUrl}
+                                productName={product.name}
+                            />
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,12 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
+import CartNav from '@/Components/CartNav';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function AuthenticatedLayout({ header, children }) {
+export default function AuthenticatedLayoutCustomer({ header, children }) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -13,13 +14,13 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+<nav className="sticky top-0 z-50 bg-gradient-to-r from-black-500 via-black-500 to-white-500 shadow-xl backdrop-blur-md border-b border-emerald-200/50 dark:border-orange-200/50">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto" />
+                                    <ApplicationLogo className="block h-10 w-auto hover:scale-110 transition-transform duration-300" />
                                 </Link>
                             </div>
 
@@ -29,12 +30,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </NavLink>
                         {user?.account?.account_type === 'customer' && (
                             <>
-                                <NavLink href="/shop">
+                                <NavLink href="/shop" active={route().current('shop')} className="flex items-center">
                                     Shop
+                                    <svg className="w-4 h-4 inline ms-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                    </svg>
                                 </NavLink>
-                                <NavLink href="/carts">
-                                    Cart
-                                </NavLink>
+                                <CartNav className="!flex items-center" />
                             </>
                         )}
 
@@ -62,12 +64,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink href="/reviews">
                                         Reviews
                                 </NavLink>
-
                             </div>
-
-
-
-
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
@@ -79,7 +76,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
                                             >
-                                                {user.first_name} {user.last_name}
+                                                <div className="flex items-center space-x-2">
+                                                    <div className="w-8 h-8 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center font-semibold text-sm text-white shadow-lg">
+                                                        {user.first_name?.[0]}{user.last_name?.[0]}
+                                                    </div>
+                                                    <span className="font-medium text-sm hidden sm:block">{user.first_name} {user.last_name}</span>
+                                                </div>
 
                                                 <svg
                                                     className="-me-0.5 ms-2 h-4 w-4"
@@ -169,7 +171,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 Dashboard
                             </ResponsiveNavLink>
                             <ResponsiveNavLink href="/shop">Shop</ResponsiveNavLink>
-                            <ResponsiveNavLink href="/carts">Cart</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/carts">
+                                Cart
+                                <svg className="w-4 h-4 inline ms-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1 3h10l-1-3M7 13l-1 3" />
+                                </svg>
+                            </ResponsiveNavLink>
 {(user?.account?.account_type && !/customer/i.test(user.account.account_type)) && (
                             <>
                             <ResponsiveNavLink href="/users">Users</ResponsiveNavLink>
@@ -179,7 +186,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             <ResponsiveNavLink href="/orders">Orders</ResponsiveNavLink>
                             <ResponsiveNavLink href="/payments">Payments</ResponsiveNavLink>
                             <ResponsiveNavLink href="/reviews">Reviews</ResponsiveNavLink>
-                            <ResponsiveNavLink href="/reports">Reports</ResponsiveNavLink>
                         </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
@@ -208,8 +214,8 @@ export default function AuthenticatedLayout({ header, children }) {
                 </div>
             </nav>
 
-            {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
+{header && (
+                <header className="bg-white/80 backdrop-blur-md shadow-xl border-b dark:bg-gray-800/80 dark:border-gray-700/50">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>

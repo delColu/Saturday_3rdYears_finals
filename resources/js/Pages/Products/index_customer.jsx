@@ -127,7 +127,7 @@ export default function ProductsIndexCustomer({ search: initialSearch }) {
                                     </div>
                                     <div className="flex-1 max-w-md relative group">
                                         <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors pointer-events-none z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 4h14v2H5V4zm0 4h14v2H5V8zm0 4h5v2H5v-2z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 4h14v2H5V4zm0 4h14v2H5V8zm0 4h5v2H5v-2z" />
                                         </svg>
                                         <InputLabel value="Filter by category" className="sr-only" />
                                         <select
@@ -171,7 +171,7 @@ export default function ProductsIndexCustomer({ search: initialSearch }) {
                                     <div id="products" className="mb-12">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                                             {products.data.map((product) => (
-                                                <div key={product.id} className="group">
+                                                <div key={product.id} className="group h-full">
                                                     <ProductCard product={product} />
                                                 </div>
                                             ))}
@@ -227,4 +227,3 @@ export default function ProductsIndexCustomer({ search: initialSearch }) {
         </AuthenticatedLayoutCustomer>
     );
 }
-
