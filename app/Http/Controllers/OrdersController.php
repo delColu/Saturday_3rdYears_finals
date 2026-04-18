@@ -87,7 +87,7 @@ class OrdersController extends Controller
             'status' => 'required|in:Pending,Confirmed,Shipped,Delivered,Cancelled'
         ]);
 
-$oldStatus = $order->status;
+        $oldStatus = $order->status;
         $order->update($request->only('status'));
 
         Log::info('Order status update - ID: ' . $order->id . ', old: ' . $oldStatus . ', new: ' . $request->status);

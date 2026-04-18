@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\CategoriesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,9 +42,11 @@ Route::middleware('auth', 'verified')->group(function () {
     // Admin-only routes
     Route::middleware('admin')->group(function () {
         Route::resource('users', UsersController::class);
+        Route::resource('categories', CategoriesController::class);
         Route::resource('products', ProductsController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
         Route::get('/products/{product}/info', [ProductsController::class, 'info'])->name('products.info');
     });
+
 
     Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
@@ -55,9 +58,9 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
     Route::get('/payments/{payment}/show', [PaymentsController::class, 'view'])->name('payments.show');
     Route::middleware('admin')->group(function () {
-        Route::get('/payments/{payment}', [PaymentsController::class, 'show'])->name('payments.edit');
-        Route::put('/payments/{payment}', [PaymentsController::class, 'update'])->name('payments.update');
-        Route::get('/payments/email/{order}', [PaymentsController::class, 'previewEmail'])->name('payments.email');
+    Route::get('/payments/{payment}', [PaymentsController::class, 'show'])->name('payments.edit');
+    Route::put('/payments/{payment}', [PaymentsController::class, 'update'])->name('payments.update');
+    Route::get('/payments/email/{order}', [PaymentsController::class, 'previewEmail'])->name('payments.email');
     });
     Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store');
     Route::get('/payments/confirm/{order}', [PaymentsController::class, 'confirm'])->name('payments.confirm');

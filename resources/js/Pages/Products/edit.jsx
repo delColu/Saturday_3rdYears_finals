@@ -8,7 +8,7 @@ import InputLabel from '@/Components/InputLabel';
 
 export default function Edit({ auth, product, categories }) {
 
-  const { data, setData, put, processing, errors, progress, reset } = useForm({
+  const { data, setData, post, processing, errors, progress, transform } = useForm({
 
     ...product,
 
@@ -20,7 +20,14 @@ export default function Edit({ auth, product, categories }) {
 
     e.preventDefault();
 
-    put(route('products.update', product.id));
+    transform((formData) => ({
+      ...formData,
+      _method: 'put',
+    }));
+
+    post(route('products.update', product.id), {
+      forceFormData: true,
+    });
 
   };
 
@@ -229,11 +236,11 @@ export default function Edit({ auth, product, categories }) {
                   </div>
                 )}
 
-                {progress && (
+                {progress && progress.bytes && progress.total && (
 
                   <div className="mt-2 text-sm text-gray-500">
 
-                    Uploading {progress.percentage()}%
+                    Uploading {Math.round((progress.bytes / progress.total) * 100)}%
 
                   </div>
 

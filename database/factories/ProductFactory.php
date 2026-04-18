@@ -17,13 +17,15 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $imageOptions = ['pictures/Apple.jpg', 'pictures/Bananas.jpg', 'pictures/Mangos.jpg'];
+
         return [
             'category_id' => \App\Models\Category::inRandomOrder()->first()?->id ?? \App\Models\Category::factory(),
             'name' => fake()->words(3, true),
             'description' => fake()->paragraph(),
             'price' => fake()->randomFloat(2, 10, 1000),
             'stock' => fake()->numberBetween(0, 100),
-            'image' => 'pictures/tiny_dragon.jpg',
+            'image' => $imageOptions[array_rand($imageOptions)]
         ];
     }
 }

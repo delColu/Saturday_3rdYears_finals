@@ -52,7 +52,7 @@ export default function ProductInfo({ product, relatedProducts }) {
         setReviewForm(prev => ({ ...prev, rating }));
     };
 
-    const productUrl = window.location.origin + route('products.show', product.id);
+    const productUrl = route('products.show', product.id);
 
     return (
         <AuthenticatedLayout
@@ -96,7 +96,7 @@ export default function ProductInfo({ product, relatedProducts }) {
                                     </div>
 
                                     <div className="flex items-center">
-                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                        <span className={`px-3 py-1 rounded-full text-sm text-white font-medium ${
                                             product.status === 'available'
                                                 ? 'bg-green-100 text-green-800 dark:bg-green-900'
                                                 : 'bg-red-100 text-red-800 dark:bg-red-900'
@@ -108,7 +108,7 @@ export default function ProductInfo({ product, relatedProducts }) {
                                         </span>
                                     </div>
 
-                                    <div className="prose dark:prose-invert max-w-none bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+                                    <div className="prose dark:prose-invert max-w-none bg-white dark:bg-gray-700 text-white p-4 rounded-lg shadow-sm">
                                         <div dangerouslySetInnerHTML={{ __html: product.description || 'No description available.' }} />
                                     </div>
 

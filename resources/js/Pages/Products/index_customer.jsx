@@ -130,37 +130,39 @@ export default function ProductsIndexCustomer({ search: initialSearch }) {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 4h14v2H5V4zm0 4h14v2H5V8zm0 4h5v2H5v-2z" />
                                         </svg>
                                         <InputLabel value="Filter by category" className="sr-only" />
-                                        <select
-                                            value={selectedCategoryId}
-                                            onChange={(e) => {
-                                                setSelectedCategoryId(e.target.value);
-                                                debouncedFilter(search, e.target.value);
-                                            }}
-                                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-200/50 dark:focus:ring-emerald-800/50 transition-all shadow-lg hover:shadow-xl bg-white/80 backdrop-blur-sm dark:bg-gray-700/80 appearance-none cursor-pointer"
-                                        >
-                                            <option value="">All Categories</option>
-                                            {categories?.map((category) => (
-                                                <option key={category.id} value={category.id}>
-                                                    {category.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {selectedCategoryId && (
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    const currentPage = getCurrentPage();
-                                                    setSelectedCategoryId('');
-                                                    debouncedFilter(search, '');
+                                        <div className="flex items-end gap-2">
+                                            <select
+                                                value={selectedCategoryId}
+                                                onChange={(e) => {
+                                                    setSelectedCategoryId(e.target.value);
+                                                    debouncedFilter(search, e.target.value);
                                                 }}
-                                                className="mt-1 w-full px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-sm"
+                                                className="flex-1 pl-12 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-200/50 dark:focus:ring-emerald-800/50 transition-all shadow-lg hover:shadow-xl bg-white/80 backdrop-blur-sm dark:bg-gray-700/80 appearance-none cursor-pointer"
                                             >
-                                                <svg className="-ms-1 mr-2 w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                                Clear Filter
-                                            </button>
-                                        )}
+                                                <option value="">All Categories</option>
+                                                {categories?.map((category) => (
+                                                    <option key={category.id} value={category.id}>
+                                                        {category.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {selectedCategoryId && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const currentPage = getCurrentPage();
+                                                        setSelectedCategoryId('');
+                                                        debouncedFilter(search, '');
+                                                    }}
+                                                    className="w-auto px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 text-sm flex items-center gap-1 flex-shrink-0"
+                                                >
+                                                    <svg className="-ms-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                    Clear Filter
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

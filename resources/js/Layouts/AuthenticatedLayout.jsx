@@ -20,7 +20,7 @@ export default function AuthenticatedLayoutCustomer({ header, children }) {
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-10 w-auto hover:scale-110 transition-transform duration-300" />
+                                    <ApplicationLogo className="block rounded-full h-10 w-auto hover:scale-110 transition-transform duration-300" />
                                 </Link>
                             </div>
 
@@ -63,6 +63,9 @@ export default function AuthenticatedLayoutCustomer({ header, children }) {
                                 {/* reviews */}
                                 <NavLink href="/reviews">
                                         Reviews
+                                </NavLink>
+                                <NavLink href="/categories">
+                                    Categories
                                 </NavLink>
                             </div>
                         </div>

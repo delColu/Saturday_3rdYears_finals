@@ -1,6 +1,7 @@
 import AuthenticatedLayoutCustomer from '@/Layouts/AuthenticatedLayoutCustomer';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
+import ApplicationLogo from '@/Components/ApplicationLogo';
 
 export default function DashboardCustomer({ user, featuredProducts }) {
     const { auth } = usePage().props;
@@ -18,25 +19,27 @@ export default function DashboardCustomer({ user, featuredProducts }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     {/* Hero Section */}
-                    <div className="bg-blue-600 rounded-xl shadow-2xl overflow-hidden mb-12 p-12 text-white text-center border-4 border-blue-700">
+                    <div className="bg-gradient-to-r from-fruit-orange-500 to-fruit-green-600 rounded-xl shadow-2xl overflow-hidden mb-12 p-12 text-white text-center border-4 border-lime-500">
+                        <ApplicationLogo className="mx-auto mb-6 w-24 h-24 rounded-full shadow-lg" />
                         <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                            Generic Shopping Website - Your One-Stop Shop for almost everything
+                            🍎 Fresh Fruits Market - Farm Fresh Produce Delivered! 🍌
                         </h1>
                         <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
-                            Welcome to Generic shopping website! Browse our latest featured products and start shopping today.
+                            Discover the best seasonal fruits, premium vegetables, and organic produce.
+                            Shop now and enjoy fresh flavors every day! 🥭🍊🥝
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <Link
                                 href={route('shop.index')}
-                                className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                                className="bg-fruit-yellow-banana hover:bg-fruit-orange-500 text-gray-900 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                             >
-                                Shop Now
+                                🍓 Shop Fresh Fruits
                             </Link>
                             <Link
                                 href={route('carts.index')}
-                                className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300"
+                                className="bg-fruit-green-500 hover:bg-fruit-green-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
                             >
-                                View Cart
+                                🛒 View Cart
                             </Link>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -75,8 +76,10 @@ class ProductsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // TODO: Delete old image
-            $validated['image'] = $request->file('image')->store('pictures', 'public');
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         $product->update($validated);
@@ -134,4 +137,3 @@ class ProductsController extends Controller
         ]);
     }
 }
-

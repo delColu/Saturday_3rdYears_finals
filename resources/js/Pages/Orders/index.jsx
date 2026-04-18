@@ -6,6 +6,7 @@ import Items from './items.jsx';
 import PrimaryButton from '@/Components/PrimaryButton.jsx';
 import DangerButton from '@/Components/DangerButton.jsx';
 import SecondaryButton from '@/Components/SecondaryButton.jsx';
+import GreenBtn from '@/Components/GreenBtn.jsx';
 
 export default function OrdersIndex() {
     const { orders, auth } = usePage().props;
@@ -74,13 +75,21 @@ export default function OrdersIndex() {
                                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
 
                                                         {isAdmin && (
+                                                            <>
+                                                            <GreenBtn className="ml-2">
+                                                                <Link
+                                                                    href={route('orders.edit', order.id)}>
+                                                                    Edit
+                                                                </Link>
+                                                            </GreenBtn>
+                                                            </>
+                                                        )}
                                                             <PrimaryButton>
                                                                 <Link
                                                                     href={route('orders.show', order.id)}>
                                                                     View
                                                                 </Link>
                                                             </PrimaryButton>
-                                                        )}
                                                             <SecondaryButton
                                                                 onClick={() => {
                                                                     setSelectedOrder(order);

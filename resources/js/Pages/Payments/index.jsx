@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/react';
 import { Link, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
+import GreenBtn from '@/Components/GreenBtn';
 
 export default function PaymentsIndex() {
     const { payments, auth } = usePage().props;
@@ -80,11 +81,11 @@ export default function PaymentsIndex() {
                                                     </PrimaryButton>
 
                                                     {isAdmin && (
-                                                        <SecondaryButton className="ml-2">
+                                                        <GreenBtn className="ml-2">
                                                         <Link href={route('payments.edit', payment.id)}>
                                                             Edit
                                                         </Link>
-                                                        </SecondaryButton>
+                                                        </GreenBtn>
                                                     )}
                                                     </td>
                                                 </tr>
