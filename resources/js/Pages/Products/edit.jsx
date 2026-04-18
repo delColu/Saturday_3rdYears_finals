@@ -8,20 +8,25 @@ import InputLabel from '@/Components/InputLabel';
 
 export default function Edit({ auth, product, categories }) {
 
-  const { data, setData, put, processing, errors, progress, reset } = useForm({
-
-    ...product,
-
+  const { data, setData, post, processing, errors, progress } = useForm({
+    name: product.name ?? '',
+    description: product.description ?? '',
+    status: product.status ?? 'available',
+    price: product.price ?? '',
+    stock: product.stock ?? '',
+    category_id: product.category_id ?? '',
     image: null,
-
+    _method: 'put',
   });
 
   const submit = (e) => {
-
     e.preventDefault();
 
-    put(route('products.update', product.id));
-
+    post(route('products.update', product.id), {
+      forceFormData: true,
+      preserveState: true,
+      preserveScroll: true,
+    });
   };
 
   return (
@@ -47,19 +52,12 @@ export default function Edit({ auth, product, categories }) {
                 <InputLabel htmlFor="name" value="Name" />
 
                 <TextInput
-
                   id="name"
-
                   name="name"
-
-                  value={data.name}
-
+                  value={data.name ?? ''}
                   className="mt-1 block w-full"
-
                   onChange={(e) => setData('name', e.target.value)}
-
                   required
-
                 />
 
                 <InputError message={errors.name} className="mt-2" />
@@ -71,19 +69,12 @@ export default function Edit({ auth, product, categories }) {
                 <InputLabel htmlFor="description" value="Description" />
 
                 <textarea
-
                   id="description"
-
                   name="description"
-
                   rows="3"
-
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-
-                  value={data.description || ''}
-
+                  value={data.description ?? ''}
                   onChange={(e) => setData('description', e.target.value)}
-
                 ></textarea>
 
                 <InputError message={errors.description} className="mt-2" />
@@ -95,23 +86,14 @@ export default function Edit({ auth, product, categories }) {
                 <InputLabel htmlFor="price" value="Price" />
 
                 <TextInput
-
                   id="price"
-
                   type="number"
-
                   step="0.01"
-
                   name="price"
-
-                  value={data.price}
-
+                  value={data.price ?? ''}
                   className="mt-1 block w-full"
-
-                  onChange={(e) => setData('price', e.target.value)}
-
+                  onChange={(e) => setData('price', parseFloat(e.target.value) || null)}
                   required
-
                 />
 
                 <InputError message={errors.price} className="mt-2" />
@@ -125,8 +107,8 @@ export default function Edit({ auth, product, categories }) {
                   id="status"
                   name="status"
                   className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  value={data.status}
-                  onChange={(e) => setData('status', e.target.value)}
+                  value={data.status ?? 'available'}
+                  onChange={(e) => setData('status', e.target.value || null)}
                 >
                   <option value="available">Available</option>
                   <option value="unavailable">Unavailable</option>
@@ -139,21 +121,13 @@ export default function Edit({ auth, product, categories }) {
                 <InputLabel htmlFor="stock" value="Stock" />
 
                 <TextInput
-
                   id="stock"
-
                   type="number"
-
                   name="stock"
-
-                  value={data.stock}
-
+                  value={data.stock ?? ''}
                   className="mt-1 block w-full"
-
-                  onChange={(e) => setData('stock', e.target.value)}
-
+                  onChange={(e) => setData('stock', parseInt(e.target.value) || null)}
                   required
-
                 />
 
                 <InputError message={errors.stock} className="mt-2" />
@@ -172,9 +146,9 @@ export default function Edit({ auth, product, categories }) {
 
                   className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
-                  value={data.category_id}
+                  value={data.category_id ?? ''}
 
-                  onChange={(e) => setData('category_id', e.target.value)}
+                  onChange={(e) => setData('category_id', parseInt(e.target.value) || null)}
 
                   required
 
@@ -215,7 +189,6 @@ export default function Edit({ auth, product, categories }) {
                   onChange={(e) => setData('image', e.target.files[0])}
 
                   accept="image/*"
-
                 />
 
 {product.image && (
@@ -229,14 +202,10 @@ export default function Edit({ auth, product, categories }) {
                   </div>
                 )}
 
-                {progress && (
-
+{progress && progress.bytes && progress.total && (
                   <div className="mt-2 text-sm text-gray-500">
-
-                    Uploading {progress.percentage()}%
-
+                    Uploading {Math.round((progress.bytes / progress.total) * 100)}%
                   </div>
-
                 )}
 
                 <InputError message={errors.image} className="mt-2" />

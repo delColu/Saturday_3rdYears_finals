@@ -52,7 +52,7 @@ export default function ProductInfo({ product, relatedProducts }) {
         setReviewForm(prev => ({ ...prev, rating }));
     };
 
-    const productUrl = window.location.origin + route('products.show', product.id);
+    const productUrl = route('products.show', product.id);
 
     return (
         <AuthenticatedLayout
