@@ -83,7 +83,7 @@ export default function Welcome({ auth, products, categories, canLogin, canRegis
                                         href={route('login')}
                                         className="px-10 py-5 border-2 border-emerald-600 text-emerald-700 font-semibold rounded-full hover:bg-emerald-600 hover:text-white transform hover:scale-105 transition-all duration-300 dark:border-lime-500 dark:text-lime-400 dark:hover:bg-lime-500"
                                     >
-                                        Login to Cart
+                                        Login
                                     </Link>
                                 )}
                             </div>

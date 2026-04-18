@@ -58,24 +58,20 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         return Inertia::render('Products/edit', [
-            'product' => $product->load('category'),
+            'product' => $product->only(['id', 'name', 'description', 'image', 'status', 'price', 'stock', 'category_id']),
             'categories' => Category::select('id', 'name')->get()
         ]);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:available,unavailable',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('image')) {
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $validated['image'] = $request->file('image')->store('products', 'public');
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
@@ -84,7 +80,7 @@ class ProductsController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('products.index');
+        return redirect()->back()->with('success', 'Product updated successfully!');
     }
 
     public function destroy(Product $product)

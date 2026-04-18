@@ -68,7 +68,7 @@ export default function ProductCard({ product }) {
                     <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-emerald-700 transition-all duration-300 line-clamp-1">
                         {product.name}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2 flex-1">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2 flex-1 min-h-[3rem]">
                         {product.description || 'No description available.'}
                     </p>
                     <div className="mt-auto space-y-2">

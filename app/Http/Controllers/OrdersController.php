@@ -60,7 +60,7 @@ class OrdersController extends Controller
         $user = auth()->user();
         $isCustomer = $user && $user->account && $user->account->account_type === 'customer';
 
-        if ($isCustomer || $order->user_id !== $user->id) {
+        if ($isCustomer && $order->user_id !== $user->id) {
             abort(403);
         }
 
