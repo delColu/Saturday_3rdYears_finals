@@ -64,7 +64,7 @@ export default function Welcome({ auth, products, categories, canLogin, canRegis
 
                         <div className="text-center max-w-4xl mx-auto">
                             <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6 drop-shadow-2xl">
-                                Welcome to Our Shop
+                                Welcome to Generic Shopping Website
                             </h1>
                             <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed max-w-2xl mx-auto">
                                 Discover amazing products at unbeatable prices. Fresh arrivals daily.
@@ -82,7 +82,7 @@ export default function Welcome({ auth, products, categories, canLogin, canRegis
                                         href={route('login')}
                                         className="px-10 py-5 border-2 border-gray-300 text-gray-800 font-semibold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
                                     >
-                                        Login to Cart
+                                        Login
                                     </Link>
                                 )}
                             </div>

@@ -79,7 +79,7 @@ export default function ProductsIndexCustomer({ search: initialSearch }) {
                                         Fresh Deals Today!
                                     </h1>
                                     <p className="text-xl mb-6 opacity-90 drop-shadow-md">
-                                        Discover premium groceries at unbeatable prices. Shop now and save!
+                                        Discover items at unbeatable prices. Shop now and save!
                                     </p>
                                     <Link href="#products" className="inline-flex items-center px-8 py-4 bg-white/20 backdrop-blur-sm rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-300 shadow-xl hover:scale-105 hover:shadow-2xl">
                                         Browse Products
@@ -91,8 +91,7 @@ export default function ProductsIndexCustomer({ search: initialSearch }) {
                             </div>
 
                             <div className="mb-8">
-                            <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-emerald-600 via-green-600 to-orange-500 bg-clip-text text-transparent drop-shadow-lg">Fresh Groceries Await!</h2>
-                            <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Browse Our Products</h3>
+                            <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-emerald-600 via-green-600 to-orange-500 bg-clip-text text-transparent drop-shadow-lg">New Items Await!</h2>
                                 <div className="flex gap-4 items-end max-w-2xl">
                                     <div className="flex-1 max-w-md relative group">
                                         <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors pointer-events-none z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
